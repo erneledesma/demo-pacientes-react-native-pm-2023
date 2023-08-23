@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Cita from './components/Cita';
+import Formulario  from './components/Formulario';
 
 
 export default function App() {
@@ -12,12 +13,21 @@ export default function App() {
     { id: "3", paciente: 'Native', propietario: 'Eduardo', sintomas: 'No canta'}
   ]);
 
+  //Eliminar los pacientes del state
+  const eliminarPaciente = id => {
+    setCitas( (citasActuales) => {
+      return citasActuales.filter( cita => cita.id !== id );
+    })
+  }
+
   return (
       <View style={styles.contenedor}>
         <Text style={styles.titulo}>Administrador de Citas</Text>
+        <Formulario />
+        
             <FlatList
               data={citas}
-              renderItem={ ({ item }) => <Cita item={item} /> }
+              renderItem={ ({ item }) => <Cita item={item} eliminarPaciente={eliminarPaciente}/> }
               keyExtractor={ cita => cita.id }
         />
       </View> 
